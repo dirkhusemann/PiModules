@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 
 """pimodules: PiModules(R) Product support Python package
 
