@@ -1,0 +1,14 @@
+[Unit]
+Description=UPS Pico Service
+After=local-fs.target
+Requires=local-fs.target
+
+[Install]
+WantedBy=default.target
+
+[Service]
+Restart=always
+Type=simple
+PrivateTmp=false
+ExecStart=/usr/local/bin/picofssd --foreground --xml-config /etc/pimodules/picofssd/picofssd.xml
+
