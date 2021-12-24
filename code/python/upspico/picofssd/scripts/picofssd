@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 """
 
@@ -40,7 +40,7 @@ class fssd(Daemon):
 
 		try:
 			self.xmlconfig = xmlconfig
-			with open(self.xmlconfig, 'rt') as fi:
+			with open(self.xmlconfig, 'rb') as fi:
 				self.config = xmltodict.parse(fi)
 		except IOError as e:
 			self.log.warning("Failed to load XML config file, loading defaults. Alerts will be disabled")
@@ -140,12 +140,12 @@ class fssd(Daemon):
 		Super-class overloaded run method.
 		"""
 
-		self.log.info("Started")
-		self.log.debug(self.config['fssd:enabled'])
-		self.log.debug(self.config['fssd:server'])
-		self.log.debug(self.config['fssd:username'])
-		self.log.debug(self.config['fssd:sender-email-address'])
-		self.log.debug(self.config['fssd:recipient-email-address'])
+		self.log.info("picofssd started")
+		self.log.info(f'picofssd email enabled:         {self.config["fssd:enabled"]}')
+		self.log.info(f'picofssd email server:          {self.config["fssd:server"]}')
+		self.log.info(f'picofssd email username:        {self.config["fssd:username"]}')
+		self.log.info(f'picofssd email sender-address:  {self.config["fssd:sender-email-address"]}')
+		self.log.info(f'picofssd email recipient:       {self.config["fssd:recipient-email-address"]}')
 
 		# register function to cleanup at exit
 		atexit.register(self.cleanup)
@@ -156,18 +156,20 @@ class fssd(Daemon):
 			time.sleep(5)
 
 
+if __name__ == '__main__':
+        
+        # parse the command-line
+        parser = argparse.ArgumentParser()
+        parser.add_argument('-l', '--log-level', help="Log level, 'info' or 'debug'", default='info', choices=['info', 'debug'])
+        parser.add_argument("-x", "--xml-config", help="XML config file", default='picofssd.xml', required=True)
 
-# parse the command-line
-parser = argparse.ArgumentParser()
-parser.add_argument('-l', '--log-level', help="Log level, 'info' or 'debug'", default='info', choices=['info', 'debug'])
-parser.add_argument("-x", "--xml-config", help="XML config file", default='picofssd.xml', required=True)
-group = parser.add_mutually_exclusive_group(required=True)
-group.add_argument("-d", "--debug", help="Keep in the foreground, do not daemonize", action="store_true", default=False)
-group.add_argument("-p", "--pid-file", help="PID file")
-args = parser.parse_args()
+        group = parser.add_mutually_exclusive_group(required=True)
+        group.add_argument("-f", "--foreground", help="Keep in the foreground, do not daemonize", action="store_true", default=False)
+        group.add_argument("-p", "--pid-file", help="PID file")
+        args = parser.parse_args()
 	
-sd = fssd(args.pid_file, args.xml_config, {'info':logging.INFO, 'debug':logging.DEBUG}[args.log_level])
+        sd = fssd(args.pid_file, args.xml_config, {'info':logging.INFO, 'debug':logging.DEBUG}[args.log_level])
 
-# the argument to the start method is opposite of debug
-sd.start(not args.debug)
+        # the argument to the start method is opposite of debug
+        sd.start(daemonize=not args.foreground)
 

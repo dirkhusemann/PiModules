@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 #####################################################################################
 # pico_status_hv3.0.py
@@ -178,41 +178,41 @@ def r232_state():
    else:
       return "ERROR"
 
-print " "
-print "***********************************"
-print "      UPS PIco HV3.0A Status       "
-print "***********************************"
-print " "
-print " ","UPS PIco Firmware.....:",fw_version()
-print " ","UPS PIco Bootloader...:",boot_version()
-print " ","UPS PIco PCB Version..:",pcb_version()
-print " ","UPS PIco BAT Version..:",bat_version()
-print " ","UPS PIco BAT Runtime..:",bat_runtime()
-print " ","UPS PIco r232 State...:",r232_state()
-print " "
-print " ","Powering Mode.........:",pwr_mode()
-print " ","BAT Percentage........:",bat_percentage(),"%"
-print " ","BAT Voltage...........:",bat_level(),"V"
-print " ","RPi Voltage...........:",rpi_level(),"V"
+print('\n')
+print('***********************************')
+print('      UPS PIco HV3.0A Status       ')
+print('***********************************')
+print('\n')
+print(f' UPS PIco Firmware.....: {fw_version()}')
+print(f' UPS PIco Bootloader...: {boot_version()}')
+print(f' UPS PIco PCB Version..: {pcb_version()}')
+print(f' UPS PIco BAT Version..: {bat_version()}')
+print(f' UPS PIco BAT Runtime..: {bat_runtime()}')
+print(f' UPS PIco r232 State...: {r232_state()}')
+print('\n')
+print(f' Powering Mode.........: {pwr_mode()}')
+print(f' BAT Percentage........: {bat_percentage()} %')
+print(f' BAT Voltage...........: {bat_level()} V')
+print(f' RPi Voltage...........: {rpi_level()} V')
 
-if (degrees == "C"):
-   print " ","NTC1 Temperature......:",ntc1_temp(),"C"
-   print " ","TO-92 Temperature.....:",to92_temp(),"C"
-elif (degrees == "F"):
-   print " ","NTC1 Temperature......:",ntc1_temp(),"F"
-   print " ","TO-92 Temperature.....:",to92_temp(),"F"
+if (degrees == 'C'):
+   print(f' NTC1 Temperature......: {ntc1_temp()} C')
+   print(f' TO-92 Temperature.....: {to92_temp()} C')
+elif (degrees == 'F'):
+   print(f' NTC1 Temperature......: {ntc1_temp()} F')
+   print(f' TO-92 Temperature.....: {to92_temp()} F')
 else:
-   print " ","NTC1 Temperature......: please set your desired temperature symbol!"
-   print " ","TO-92 Temperature.....: please set your desired temperature symbol!"
+   print(f' NTC1 Temperature......: please set your desired temperature symbol!')
+   print(f' TO-92 Temperature.....: please set your desired temperature symbol!')
 
-print " ","Extended Voltage......:",epr_read(),"V"
-print " ","A/D2 Voltage..........:",ad2_read(),"V"
-print " "
-print " ","PIco FAN Mode.........:",fan_mode()
-print " ","PIco FAN State........:",fan_state()
-print " ","PIco FAN Speed........:",fan_speed(),"RPM"
-print " "
-print "***********************************"
-print "         Powered by PiCo           "
-print "***********************************"
-print " "
+print(f' Extended Voltage......: {epr_read()} V')
+print(f' A/D2 Voltage..........: {ad2_read()} V')
+print('\n')
+print(f' PIco FAN Mode.........: {fan_mode()}')
+print(f' PIco FAN State........: {fan_state()}')
+print(f' PIco FAN Speed........: {fan_speed()} RPM')
+print('\n')
+print('***********************************')
+print('         Powered by PiCo           ')
+print('***********************************')
+print('\n')
