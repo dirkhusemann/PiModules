@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python3
 """picofssd: UPSPIco file-safe shutdown daemon
 
 This script is intended for use with the PiModules(R) UPSPIco

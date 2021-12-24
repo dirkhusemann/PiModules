@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 """
 
@@ -40,7 +40,7 @@ class fssd(Daemon):
 
 		try:
 			self.xmlconfig = xmlconfig
-			with open(self.xmlconfig, 'rt') as fi:
+			with open(self.xmlconfig, 'rb') as fi:
 				self.config = xmltodict.parse(fi)
 		except IOError as e:
 			self.log.warning("Failed to load XML config file, loading defaults. Alerts will be disabled")
